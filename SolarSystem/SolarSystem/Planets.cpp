@@ -31,7 +31,7 @@ void Planets::Draw()
 	if(angle >= 360) angle = 0.0f;
 	else angle += rotSpeed * 0.01;
 	
-	glBegin(GL_LINE_LOOP);
+	glBegin(GL_LINES);
  
 	for (int i = 0; i < 360; i++)
 	{

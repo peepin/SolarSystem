@@ -12,8 +12,11 @@ static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
 
 static GLuint texName;
 
-float x = 2.5f, y = 0.0;
+float x = 0.0f, y = -200.0f, z = 0.0f;
+float lX = 0.0f, lY = 0.0f, lZ = 0.0f;
 
+float RotX, RotY;
+float camDistance = 40, camAngle = 0;
 Texture treeTexture;
 
 Planets* Mercury;
@@ -48,8 +51,11 @@ void reshape (int width, int height)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
+	//glTranslatef(x,y,z);
 	gluPerspective(100.0, 1.66, 1.0, 20000);
-	gluLookAt(0, 800, -1000, 0, 0, 0, 0, 1, 0);
+	//gluLookAt(x, y, z, lX, lY, lZ, 0, 1, 0);
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
 }
 
 void init()
@@ -67,12 +73,20 @@ void init()
 
 void display()
 {
+	
 	glEnable(GL_DEPTH_TEST);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	
+	glTranslatef(x, y, z);
+	glRotatef(RotX, 0.0, 1.0, 0.0);
+	glRotatef(RotY, 1.0, 0.0, 0.0);
+	glRotatef(0.0, 0.0, 0.0, 1.0);
+	//glTranslatef(-x, -y, -z);
 
+	glRotatef(RotX, 0.0, 1.0, 0.0);
 	Mercury->Draw();
 	Venus->Draw();
 	Earth->Draw();
@@ -86,12 +100,28 @@ void display()
 
 	glPushMatrix();
 	glColor3f(1.0, 1.0, 0.5);
-	glutSolidSphere(109.1f, 360, 20);
+	glutSolidSphere(109.1, 360, 20);
 	glPopMatrix();
 
 
+	
+
 	glutSwapBuffers();
 }
+
+int nx, ny;
+
+void mouseMotion(int xx, int yy)
+{
+	if(nx > xx) RotX++;
+	else if(xx > nx) RotX--;
+	nx = xx;
+	if(ny > yy) RotY--;
+	else if(yy > ny) RotY++;
+	ny = yy;
+	glutPostRedisplay();
+}
+
 
 void keyboard(unsigned char key, int xx, int yy)
 {
@@ -99,15 +129,21 @@ void keyboard(unsigned char key, int xx, int yy)
 	{
 	case 'a':
 		//x--;
+		//camAngle -= 0.01;
+		///lX = sin(camAngle);
+		//lZ = -cos(camAngle);
 		break;
 	case 'd':
+		//camAngle += 0.01;
+		//lX = sin(camAngle);
+		//lZ = -cos(camAngle);
 		//x++;
 		break;
 	case 'w':
-		//y++;
+		z += 5.0f;
 		break;
 	case 's':
-		//y--;
+		z -= 5.0f;
 		break;
 	}
 	glutPostRedisplay();
@@ -117,11 +153,6 @@ void HandleTimer(int ID)
 {
 	glutTimerFunc(33,HandleTimer,1);
 	
-	/*earthZ = cos(earthAngle) * earthDistance;
-	earthX = sin(earthAngle) * earthDistance;
-
-	earthAngle += 0.01;*/
-
 
 	glutPostRedisplay();	
 }
@@ -138,7 +169,11 @@ int main(int argc, char* argv[])
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+
+	glutMotionFunc(mouseMotion);
+
 	glutKeyboardFunc(keyboard);
+
 	glutTimerFunc(1000, HandleTimer, 1);
 
 	glutMainLoop();
