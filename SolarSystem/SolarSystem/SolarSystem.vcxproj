@@ -63,11 +63,13 @@
     <ClCompile Include="glm.cpp" />
     <ClCompile Include="glmimg.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Moons.cpp" />
     <ClCompile Include="Planets.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glm.h" />
+    <ClInclude Include="Moons.h" />
     <ClInclude Include="Planets.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>

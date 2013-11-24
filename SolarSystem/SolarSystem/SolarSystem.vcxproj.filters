@@ -30,6 +30,9 @@
     <ClCompile Include="Planets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Moons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glm.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Planets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Moons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
