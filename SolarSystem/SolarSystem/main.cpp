@@ -19,6 +19,8 @@ float RotX, RotY;
 float camDistance = 70, camAngle = 0, camDist2 = 70, camAngle2 = 0;
 Texture treeTexture;
 
+GLMmodel* Glsun;
+
 Planets* Mercury;
 Planets* Venus;
 Planets* Earth;
@@ -67,7 +69,7 @@ void reshape (int width, int height)
     glLoadIdentity();
 
 	//glTranslatef(x,y,z);
-	gluPerspective(10.0, 1.66, 1.0, 2000000);
+	gluPerspective(100.0, 1.66, 1.0, 2000000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -80,35 +82,38 @@ void init()
 	//                                    //
 	////////////////////////////////////////
 
+	//Sun//
+	Glsun = NULL;
+
 	//Planets//
-	Mercury = new Planets(0.383f, 1.61f, 58.0f, 0.8f, 0.5f, 0.5f);
-	Venus = new Planets(0.949f, 1.18f, 108.0f, 1.0f, 0.0f, 0.0f);
-	Earth = new Planets(1.0f, 1.0f, 150.0f, 0.0f, 0.0f, 1.0f);
-	Mars = new Planets(0.532f, 0.81, 228.0f, 1.0f, 0.5f, 0.5f);
-	Jupiter = new Planets(11.21f, 0.439f, 778.0f, 0.7f, 0.5f, 0.5f);
-	Saturn = new Planets(9.45f, 0.325f, 1429.0f, 0.6f, 0.5f, 0.5f);
-	Uranus = new Planets(4.01f, 0.229f, 2871.0f, 0.5f, 0.5f, 1.0f);
-	Neptune = new Planets(3.88f, 0.182f, 4504.0f, 0.0f, 0.0f, 1.0f);
-	Pluto = new Planets(0.187f, 0.158f, 5913.0f, 0.0f, 0.0f, 1.0f);
+	Mercury = new Planets(0.383f, 1.61f, 58.0f, 0.8f, 0.5f, 0.5f, "Mercury.obj");
+	Venus = new Planets(0.949f, 1.18f, 108.0f, 1.0f, 0.0f, 0.0f, "Venus.obj");
+	Earth = new Planets(1.0f, 1.0f, 150.0f, 0.0f, 0.0f, 1.0f, "Earth.obj");
+	Mars = new Planets(0.532f, 0.81, 228.0f, 1.0f, 0.5f, 0.5f, "mars.obj");
+	Jupiter = new Planets(11.21f, 0.439f, 778.0f, 0.7f, 0.5f, 0.5f, "Jupiter.obj");
+	Saturn = new Planets(9.45f, 0.325f, 1429.0f, 0.6f, 0.5f, 0.5f, "saturn.obj");
+	Uranus = new Planets(4.01f, 0.229f, 2871.0f, 0.5f, 0.5f, 1.0f, "uranus.obj");
+	Neptune = new Planets(3.88f, 0.182f, 4504.0f, 0.0f, 0.0f, 1.0f, "neptune.obj");
+	Pluto = new Planets(0.187f, 0.158f, 5913.0f, 0.0f, 0.0f, 1.0f, "pluto.obj");
 	
 	//Earth Moon//
-	Luna = new Moons(Earth, 0.27f, 0.15f, 4.0f, 3.0f, 3.0f, 3.0f, false);
+	Luna = new Moons(Earth, 0.27f, 0.15f, 4.0f, 3.0f, 3.0f, 3.0f, false, "moon.obj");
 	//Mars Moons//
-	Deimos = new Moons(Mars, 0.07f, 0.15f, 4.0f, 3.0f, 3.0f, 3.0f, false);
-	Phobos = new Moons(Mars, 0.07f, 0.10f, 3.5f, 3.0f, 3.0f, 3.0f, false);
+	Deimos = new Moons(Mars, 0.07f, 0.15f, 4.0f, 3.0f, 3.0f, 3.0f, false, "moonS.obj");
+	Phobos = new Moons(Mars, 0.07f, 0.10f, 3.5f, 3.0f, 3.0f, 3.0f, false, "moonS.obj");
 	//Jupiter moons//
-	Ganymede = new Moons(Jupiter, 0.45f, 0.15f, 20.0f, 6.0f, 3.0f, 3.0f, false);
-	Callisto = new Moons(Jupiter, 0.42f, 0.13f, 28.0f, 3.0f, 3.0f, 3.0f, false);
-	Io = new Moons      (Jupiter, 0.28f, 0.16f, 14.0f, 7.0f, 7.0f, 3.0f, false);
-	Europa = new Moons  (Jupiter, 0.25f, 0.14f, 18.0f, 7.0f, 3.0f, 3.0f, false);
+	Ganymede = new Moons(Jupiter, 0.45f, 0.15f, 20.0f, 6.0f, 3.0f, 3.0f, false, "moonL.obj");
+	Callisto = new Moons(Jupiter, 0.42f, 0.13f, 28.0f, 3.0f, 3.0f, 3.0f, false, "moonL.obj");
+	Io = new Moons      (Jupiter, 0.28f, 0.16f, 14.0f, 7.0f, 7.0f, 3.0f, false, "moon.obj");
+	Europa = new Moons  (Jupiter, 0.25f, 0.14f, 18.0f, 7.0f, 3.0f, 3.0f, false, "moon.obj");
 	//Saturn moons//
-	Titan = new Moons(Saturn, 0.45f, 0.13f, 22.0f, 0.8f, 0.4f, 0.4f, true);
-	Rhea = new Moons(Saturn, 0.13f, 0.12f, 14.0f, 0.6f, 0.5f, 0.5f, true);
-	Iapetus = new Moons(Saturn, 0.13f, 0.15f, 38.0f, 0.7f, 0.6f, 0.6f, true);
-	Dione = new Moons(Saturn, 0.10f, 0.14f, 18.0f, 0.6f, 0.3f, 0.3f, true);
-	Tethys = new Moons(Saturn, 0.09f, 0.17f, 16.0f, 0.6f, 0.4f, 0.4f, true);
-	Enceladus = new Moons(Saturn, 0.09f, 0.16f, 20.0f, 0.8f, 0.4f, 0.4f, true);
-	Mimas = new Moons(Saturn, 0.09f, 0.11f, 17.0f, 7.0f, 0.4f, 0.4f, true);
+	Titan = new Moons(Saturn, 0.45f, 0.13f, 22.0f, 0.8f, 0.4f, 0.4f, true, "moonL.obj");
+	Rhea = new Moons(Saturn, 0.13f, 0.12f, 14.0f, 0.6f, 0.5f, 0.5f, true, "moonS.obj");
+	Iapetus = new Moons(Saturn, 0.13f, 0.15f, 38.0f, 0.7f, 0.6f, 0.6f, true, "moonS.obj");
+	Dione = new Moons(Saturn, 0.10f, 0.14f, 18.0f, 0.6f, 0.3f, 0.3f, true, "moonS.obj");
+	Tethys = new Moons(Saturn, 0.09f, 0.17f, 16.0f, 0.6f, 0.4f, 0.4f, true, "moonS.obj");
+	Enceladus = new Moons(Saturn, 0.09f, 0.16f, 20.0f, 0.8f, 0.4f, 0.4f, true, "moonS.obj");
+	Mimas = new Moons(Saturn, 0.09f, 0.11f, 17.0f, 7.0f, 0.4f, 0.4f, true, "moonS.obj");
 }
 
 void display()
@@ -167,8 +172,19 @@ void display()
 	Mimas->Draw();
 
 	glPushMatrix();
-	glColor3f(1.0, 1.0, 0.5);
-	glutSolidSphere(109.1 * 20, 360, 20);
+		
+	if (!Glsun) 
+	{		
+		Glsun = glmReadOBJ("Sun.obj");	
+        if (!Glsun) exit(0);
+        glmFacetNormals(Glsun);        
+		glmVertexNormals(Glsun, 90.0);
+    }
+    glmDraw(Glsun, GLM_SMOOTH | GLM_TEXTURE);
+
+	
+	//glColor3f(1.0, 1.0, 0.5);
+	//glutSolidSphere(109.1 * 20, 360, 20);
 	glPopMatrix();
 
 
@@ -212,7 +228,9 @@ void keyboard(unsigned char key, int xx, int yy)
 		y = lY + y;
 		break;
 	case 's':
-		z -= 5.0f;
+		//z = lZ - z;
+		//x = lX - x;
+		//y = lY - y;
 		break;
 	}
 	glutPostRedisplay();

@@ -5,6 +5,19 @@ Planets::Planets(void)
 {
 }
 
+Planets::Planets(float sradius, float srotSpeed, float sdistance, float sR, float sG, float sB, std::string sPlanetObj)
+{
+	radius = sradius * 20;
+	rotSpeed = srotSpeed;
+	distance = sdistance * 20 + 109 * 20;
+	R = sR;
+	G = sG;
+	B = sB;
+	angle = 0;
+	model1 = NULL;
+	cPlanetObj= sPlanetObj;
+}
+
 Planets::Planets(float sradius, float srotSpeed, float sdistance, float sR, float sG, float sB)
 {
 	radius = sradius * 20;
@@ -15,7 +28,9 @@ Planets::Planets(float sradius, float srotSpeed, float sdistance, float sR, floa
 	B = sB;
 	angle = 0;
 	model1 = NULL;
+	cPlanetObj = "";
 }
+
 void Planets::drawmodel(void)
 {
 	// Load the model only if it hasn't been loaded before
@@ -23,11 +38,13 @@ void Planets::drawmodel(void)
     if (!model1) 
 	{
 		// this is the call that actualy reads the OBJ and creates the model object
-        model1 = glmReadOBJ("Earthobj.obj");	
+		
+		model1 = glmReadOBJ(strdup(cPlanetObj.c_str()));	
         if (!model1) exit(0);
 		// This will rescale the object to fit into the unity matrix
 		// Depending on your project you might want to keep the original size and positions you had in 3DS Max or GMAX so you may have to comment this.
-        glmUnitize(model1);
+        
+		//glmUnitize(model1);
 		// These 2 functions calculate triangle and vertex normals from the geometry data.
 		// To be honest I had some problem with very complex models that didn't look to good because of how vertex normals were calculated
 		// So if you can export these directly from you modeling tool do it and comment these line
@@ -37,16 +54,18 @@ void Planets::drawmodel(void)
     }
     // This is the call that will actualy draw the model
 	// Don't forget to tell it if you want textures or not :))
-    glmDraw(model1, GLM_SMOOTH| GLM_TEXTURE);
+    glmDraw(model1, GLM_SMOOTH | GLM_TEXTURE);
 	
 }
 void Planets::Draw()
 {
 	glPushMatrix();
 	glTranslatef(x, 0, z);
-	glColor3f(R, G, B);
-	drawmodel();
-	//glutSolidSphere(radius, 360, 20);
+
+	if(cPlanetObj.length() !=0) drawmodel();
+
+	if(cPlanetObj.length() == 0) glutSolidSphere(radius, 360, 20);
+
 	glPopMatrix();
 	z = cos(angle) * distance;
 	x = sin(angle) * distance;

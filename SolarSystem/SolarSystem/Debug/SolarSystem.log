@@ -1,17 +1,17 @@
-﻿Build started 26/11/2013 1:01:55 PM.
-     1>Project "C:\Users\Kyle\Documents\GitHub\SolarSystem\SolarSystem\SolarSystem\SolarSystem.vcxproj" on node 2 (build target(s)).
+﻿Build started 26/11/2013 4:07:33 PM.
+     1>Project "C:\Users\Alex\Desktop\GitHub\SolarSystem\SolarSystem\SolarSystem\SolarSystem.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\SolarSystem.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
        Link:
          All outputs are up-to-date.
-         SolarSystem.vcxproj -> C:\Users\Kyle\Documents\GitHub\SolarSystem\SolarSystem\Debug\SolarSystem.exe
+         SolarSystem.vcxproj -> C:\Users\Alex\Desktop\GitHub\SolarSystem\SolarSystem\Debug\SolarSystem.exe
        FinalizeBuildStatus:
          Deleting file "Debug\SolarSystem.unsuccessfulbuild".
          Touching "Debug\SolarSystem.lastbuildstate".
-     1>Done Building Project "C:\Users\Kyle\Documents\GitHub\SolarSystem\SolarSystem\SolarSystem\SolarSystem.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\Alex\Desktop\GitHub\SolarSystem\SolarSystem\SolarSystem\SolarSystem.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.03
+Time Elapsed 00:00:00.05
