@@ -34,7 +34,7 @@ void Moons::Draw(){
 	else angle += rotSpeed * 0.01;
 	if(ring){
 		glLineWidth(1);
-		glBegin(GL_LINES);
+		glBegin(GL_LINE_LOOP);
 	
 		for (int i = 0; i < 360; i++)
 		{

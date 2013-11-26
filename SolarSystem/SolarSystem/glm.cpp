@@ -1,3 +1,19 @@
+/*    
+      glm.c
+      Nate Robins, 1997, 2000
+      nate@pobox.com, http://www.pobox.com/~nate
+ 
+      Wavefront OBJ model file format reader/writer/manipulator.
+
+      Includes routines for generating smooth normals with
+      preservation of edges, welding redundant vertices & texture
+      coordinate generation (spheremap and planar projections) + more.
+	
+      Improved version of GLM - 08.05.2008 Tudor Carean
+	  Added support for textures and loading callbacks
+*/
+
+#include "stdafx.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -242,10 +258,14 @@ int glmFindOrAddTexture(GLMmodel* model, char* name,mycallback *call)
         if (!strcmp(model->textures[i].name, numefis))
             return i;
     }
-	char afis[80];
+	char afis[180];
 	sprintf(afis,"Loading Textures (%s )...",name);
-	int procent = ((float)((float)model->numtextures*30/total_textures)/100)*(call->end-call->start)+call->start;
-	if (call) call->loadcallback(procent,afis); // textures represent 30% from the model (just saying :))
+	
+	if (call) 
+	{
+		int procent = ((float)((float)model->numtextures*30/total_textures)/100)*(call->end-call->start)+call->start;
+		call->loadcallback(procent,afis); // textures represent 30% from the model (just saying :))		
+	}
 	if (strstr(name,":\\"))
 	{
 		filename = (char*)malloc(sizeof(char) * (strlen(name) + 1));
@@ -300,6 +320,7 @@ glmReadMTL(GLMmodel* model, char* name, mycallback *call)
     filename = (char*)malloc(sizeof(char) * (strlen(dir) + strlen(name) + 1));
     strcpy(filename, dir);
     strcat(filename, name);
+	
     free(dir);
     
     file = fopen(filename, "r");
@@ -407,10 +428,10 @@ glmReadMTL(GLMmodel* model, char* name, mycallback *call)
             filename = (char *)malloc(FILENAME_MAX);
             fgets(filename, FILENAME_MAX, file);
             textura = strdup(filename);
-            free(filename);
+			free(filename);
             if(strncmp(buf, "map_Kd", 6) == 0) 
 			{
-				char afis[80];
+				char afis[180];
 				sprintf(afis,"Loading Textures (%s)...",textura);				
                 model->materials[nummaterials].IDTextura = glmFindOrAddTexture(model, textura,call);
                 free(textura);
@@ -536,6 +557,7 @@ static GLvoid glmFirstPass(GLMmodel* model, FILE* file, mycallback *call)
                 fgets(buf, sizeof(buf), file);
                 sscanf(buf, "%s %s", buf, buf);
                 model->mtllibname = strdup(buf);
+				
                 glmReadMTL(model, buf, call);
                 break;
             case 'u': //usemtl

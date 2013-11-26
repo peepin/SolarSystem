@@ -1,8 +1,13 @@
+#include "stdafx.h"
+
 #include <string.h>
 #include <math.h>
 #include "Texture.h"
 #include <windows.h>
+#include <GL/gl.h>
 #include "glm.h"
+
+
 
 #ifndef GL_BGR
 #define GL_BGR GL_BGR_EXT

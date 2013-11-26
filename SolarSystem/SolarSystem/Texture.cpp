@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "Texture.h"
 
 TGAHeader tgaheader;									// TGA header
@@ -8,9 +10,9 @@ GLubyte cTGAcompare[12] = {0,0,10,0,0,0,0,0,0,0,0,0};	// Compressed TGA Header
 
 bool LoadTGA(Texture * texture, char * filename)				// Load a TGA file
 {
-	FILE * fTGA;												// File pointer to texture file
+	FILE * fTGA;											// File pointer to texture file
 	fTGA = fopen(filename, "rb");								// Open file for reading
-	//fTGA = fopen("textura_perete.tga","rb");
+	//fTGA = fopen("textura_paralelipied.tga","rb");
 
 	if(fTGA == NULL)											// If it didn't open....
 	{		
